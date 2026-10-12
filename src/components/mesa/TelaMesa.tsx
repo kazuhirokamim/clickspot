@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ChamadosStore } from '../../core/chamados-store.ts';
 import { MultiTenantManager } from '../../core/multi-tenant-store.ts';
 import { TipoChamado, MetodoPagamento } from '../../types/chamado.ts';
+import { ItemCardapio } from '../../types/cardapio.ts';
+import { ShowcaseVerticalReel } from './ShowcaseVerticalReel.tsx';
 import {
   BellIcon,
   BookOpenIcon,
@@ -11,7 +13,8 @@ import {
   CopyIcon,
   XIcon,
   SearchIcon,
-  ChevronRightIcon
+  ChevronRightIcon,
+  SparklesIcon
 } from '../icons/Icons.tsx';
 
 interface TelaMesaProps {
@@ -37,6 +40,10 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
   const [modalCardapioAberto, setModalCardapioAberto] = useState<boolean>(false);
   const [modalChamarAberto, setModalChamarAberto] = useState<boolean>(false);
   const [modalContaAberto, setModalContaAberto] = useState<boolean>(false);
+
+  // Estado do Showcase FYP / Reels
+  const [reelAberto, setReelAberto] = useState<boolean>(false);
+  const [indiceReel, setIndiceReel] = useState<number>(0);
 
   // Estados de navegação interna do cardápio
   const [categoriaAtiva, setCategoriaAtiva] = useState<string>('todas');
@@ -68,6 +75,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
       setCooldown(30);
       setModalChamarAberto(false);
       setModalContaAberto(false);
+      setReelAberto(false);
 
       if (tipo === 'pedir_conta') {
         setStatusMsg({
@@ -76,7 +84,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
         });
       } else {
         setStatusMsg({
-          texto: `${label || 'Atendente'} notificado! Em instantes você será atendido.`,
+          texto: `${label || 'Atendente'} notificado! Em instantes você será atendido na Mesa ${mesaId}.`,
           tipo: 'sucesso'
         });
       }
@@ -116,7 +124,11 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
     );
   }
 
-  // Filtragem de itens do cardápio
+  // Todos os itens do restaurante
+  const todosOsItens = restaurante.cardapio.flatMap((c) => c.itens);
+  const itensComVideo = todosOsItens.filter((i) => i.videoUrl || i.destaque);
+
+  // Filtragem de itens do cardápio no modal
   const categorias = restaurante.cardapio;
   const itensExibidos = categorias
     .filter((cat) => categoriaAtiva === 'todas' || cat.id === categoriaAtiva)
@@ -128,10 +140,16 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
       })
     );
 
+  const abrirReelDoItem = (item: ItemCardapio) => {
+    const idx = todosOsItens.findIndex((i) => i.id === item.id);
+    setIndiceReel(idx >= 0 ? idx : 0);
+    setReelAberto(true);
+  };
+
   return (
     <div style={{ maxWidth: '460px', margin: '0 auto', padding: '20px 16px', width: '100%', color: '#f5f5f4' }}>
       {/* Topo / Header da Mesa */}
-      <header style={{ textAlign: 'center', marginBottom: '24px' }}>
+      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '999px', backgroundColor: '#262830', border: '1px solid #363942', color: '#d97706', fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
           <span>Mesa {mesaId}</span>
           <span style={{ color: '#78716c' }}>•</span>
@@ -142,11 +160,56 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
 
       {/* Alerta de Status */}
       {statusMsg && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderRadius: '12px', backgroundColor: statusMsg.tipo === 'sucesso' ? '#1c241c' : '#262016', border: `1px solid ${statusMsg.tipo === 'sucesso' ? '#2e4c2e' : '#5c4314'}`, color: statusMsg.tipo === 'sucesso' ? '#86efac' : '#fcd34d', fontSize: '13px', fontWeight: 500, marginBottom: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderRadius: '12px', backgroundColor: statusMsg.tipo === 'sucesso' ? '#1c241c' : '#262016', border: `1px solid ${statusMsg.tipo === 'sucesso' ? '#2e4c2e' : '#5c4314'}`, color: statusMsg.tipo === 'sucesso' ? '#86efac' : '#fcd34d', fontSize: '13px', fontWeight: 500, marginBottom: '18px' }}>
           <span>{statusMsg.texto}</span>
           <button onClick={() => setStatusMsg(null)} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', padding: 0 }}>
             <XIcon size={16} />
           </button>
+        </div>
+      )}
+
+      {/* Carrossel de Destaques em Vídeo 9:16 (Stories dos Mais Vendidos) */}
+      {itensComVideo.length > 0 && (
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              <SparklesIcon size={13} />
+              <span>Vídeos dos Mais Pedidos</span>
+            </span>
+            <span style={{ fontSize: '11px', color: '#78716c' }}>Veja o preparo</span>
+          </div>
+
+          <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '4px' }}>
+            {itensComVideo.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => abrirReelDoItem(item)}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '2px',
+                  outline: 'none',
+                  flexShrink: 0
+                }}
+              >
+                <div style={{ width: '64px', height: '64px', borderRadius: '50%', padding: '2px', backgroundColor: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img
+                    src={item.fotoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=200&q=80'}
+                    alt={item.nome}
+                    style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid #121316' }}
+                  />
+                </div>
+                <span style={{ fontSize: '11px', fontWeight: 600, color: '#f5f5f4', maxWidth: '72px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {item.nome.split(' ')[0]}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -162,7 +225,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
           </div>
           <div style={{ flex: 1 }}>
             <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#fafaf9' }}>Cardápio Digital</h3>
-            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '2px' }}>Pratos, bebidas e seleções da casa</p>
+            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '2px' }}>Toque em qualquer prato para ver o vídeo</p>
           </div>
           <ChevronRightIcon size={18} style={{ color: '#78716c' }} />
         </button>
@@ -213,7 +276,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
         </button>
       </div>
 
-      {/* MODAL 1: CARDÁPIO COMPLETO COM ABAS & BUSCA */}
+      {/* MODAL 1: CARDÁPIO COMPLETO COM TOQUE PARA REELS */}
       {modalCardapioAberto && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', zIndex: 100 }}>
           <div style={{ backgroundColor: '#18191e', border: '1px solid #2d2f36', borderRadius: '20px', maxWidth: '440px', width: '100%', maxHeight: '85vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -234,7 +297,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
                 <SearchIcon size={16} style={{ color: '#78716c' }} />
                 <input
                   type="text"
-                  placeholder="Buscar prato, ingrediente ou bebida..."
+                  placeholder="Buscar prato ou bebida..."
                   value={termoBusca}
                   onChange={(e) => setTermoBusca(e.target.value)}
                   style={{ background: 'none', border: 'none', color: '#f5f5f4', fontSize: '13px', width: '100%', outline: 'none' }}
@@ -266,7 +329,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
               </div>
             </div>
 
-            {/* Lista de Itens do Cardápio */}
+            {/* Lista de Itens do Cardápio com Clique para Abrir o Reel */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {itensExibidos.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '40px 10px', color: '#78716c', fontSize: '14px' }}>
@@ -274,22 +337,38 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
                 </div>
               ) : (
                 itensExibidos.map((item) => (
-                  <div key={item.id} style={{ padding: '14px', backgroundColor: '#212328', border: '1px solid #2d2f36', borderRadius: '12px', display: 'flex', justifyContent: 'space-between', gap: '12px' }}>
+                  <div
+                    key={item.id}
+                    onClick={() => abrirReelDoItem(item)}
+                    style={{
+                      padding: '14px',
+                      backgroundColor: '#212328',
+                      border: '1px solid #2d2f36',
+                      borderRadius: '14px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      gap: '12px',
+                      cursor: 'pointer',
+                      transition: 'border-color 0.15s'
+                    }}
+                  >
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
                         <strong style={{ fontSize: '15px', color: '#fafaf9' }}>{item.nome}</strong>
-                        {item.destaque && (
-                          <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#382811', color: '#fbbf24', border: '1px solid #78350f' }}>
-                            Destaque
+                        {item.videoUrl && (
+                          <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#382811', color: '#fbbf24', border: '1px solid #78350f', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                            <span>▶ Vídeo</span>
                           </span>
                         )}
                       </div>
                       <p style={{ fontSize: '12px', color: '#a8a29e', lineHeight: 1.4 }}>{item.descricao}</p>
                     </div>
-                    <div style={{ textAlign: 'right', alignSelf: 'center' }}>
+
+                    <div style={{ textAlign: 'right', alignSelf: 'center', display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{ fontSize: '15px', fontWeight: 700, color: '#f5f5f4' }}>
                         {item.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                       </span>
+                      <ChevronRightIcon size={16} style={{ color: '#78716c' }} />
                     </div>
                   </div>
                 ))
@@ -297,6 +376,17 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* SHOWCASE REEL FYP VERTICAL 9:16 */}
+      {reelAberto && (
+        <ShowcaseVerticalReel
+          itens={todosOsItens}
+          indiceInicial={indiceReel}
+          nomeRestaurante={restaurante.nome}
+          onFechar={() => setReelAberto(false)}
+          onPedirItem={(prato) => dispararChamado('garcom_mesa', undefined, `Pedido: ${prato.nome}`)}
+        />
       )}
 
       {/* MODAL 2: CHAMAR ATENDENTE COM MOTIVOS ESPECÍFICOS */}

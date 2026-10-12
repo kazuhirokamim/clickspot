@@ -10,6 +10,9 @@ export interface ItemCardapio {
   preco: number;
   disponivel: boolean;
   destaque?: boolean;
+  videoUrl?: string; // Vídeo vertical 9:16 de preparo (estilo TikTok/Reels)
+  fotoUrl?: string;  // Foto gastronômica de alta definição
+  tempoPreparo?: string;
 }
 
 export interface CategoriaCardapio {

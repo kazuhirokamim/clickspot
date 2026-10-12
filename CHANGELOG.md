@@ -22,5 +22,11 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 - Reformulação visual gastronômica sóbria (paleta carvão/pedra, toques âmbar/mostarda escura e fontes modernas).
 - Alerta sonoro sintetizado em tempo real via Web Audio API no balcão sem arquivos de áudio externos.
 - Suíte TDD multi-tenant com 14 testes passando 100% verdes.
+- Showcase Vertical FYP em `src/components/mesa/ShowcaseVerticalReel.tsx` com proporção 9:16 estilo TikTok/Reels.
+- Navegação vertical por gestos de toque (touch swipe) no mobile via `ReelNavigator` com clamp de limites e sensibilidade calibrada.
+- Suporte a vídeos verticais de preparação gastronômica para os pratos mais pedidos da casa e fotos em alta resolução com badge de tempo de preparo.
+- Botão de conversão direta dentro do Reel ("Chamar Garçom para Este Prato").
+- Suíte TDD completa em `tests/reel-navigator.test.ts` elevando o total para 24 testes unitários 100% verdes.
+
 
 

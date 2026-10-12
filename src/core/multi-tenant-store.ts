@@ -62,7 +62,7 @@ export class MultiTenantManager {
   }
 
   /**
-   * Popula dados iniciais de demonstração com separação estrita
+   * Popula dados iniciais de demonstração com vídeos 9:16 e fotos gastronômicas
    */
   private popularRestaurantesIniciais(): void {
     // 1. Pizzaria Bella Roma
@@ -84,14 +84,21 @@ export class MultiTenantManager {
               descricao: 'Pão italiano rústico tostado, tomates confitados, azeite extravirgem e manjericão fresco.',
               preco: 28.0,
               disponivel: true,
-              destaque: true
+              destaque: true,
+              tempoPreparo: '8 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-chef-preparing-a-salad-41315-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?auto=format&fit=crop&w=800&q=80'
             },
             {
               id: 'ent-2',
               nome: 'Burrata ao Pesto com Focaccia',
               descricao: 'Burrata artesanal cremosa, molho pesto genovês de manjericão e fatias de focaccia da casa.',
               preco: 46.0,
-              disponivel: true
+              disponivel: true,
+              destaque: true,
+              tempoPreparo: '10 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-cutting-a-burrata-cheese-over-a-dish-43391-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1592417817098-8f3d69109853?auto=format&fit=crop&w=800&q=80'
             }
           ]
         },
@@ -102,24 +109,33 @@ export class MultiTenantManager {
             {
               id: 'piz-1',
               nome: 'Pizza Margherita Verace',
-              descricao: 'Molho pelati San Marzano, mozzarella de búfala, parmesão reggiano e manjericão.',
+              descricao: 'Molho pelati San Marzano, mozzarella de búfala, parmesão reggiano e manjericão fresco.',
               preco: 62.0,
               disponivel: true,
-              destaque: true
+              destaque: true,
+              tempoPreparo: '12 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-putting-cheese-on-a-raw-pizza-43389-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=800&q=80'
             },
             {
               id: 'piz-2',
               nome: 'Pizza Calabresa Curada com Cebola Roxa',
               descricao: 'Calabresa artesanal defumada, mozzarella, cebola roxa caramelizada e azeitonas pretas.',
               preco: 58.0,
-              disponivel: true
+              disponivel: true,
+              tempoPreparo: '14 min',
+              fotoUrl: 'https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?auto=format&fit=crop&w=800&q=80'
             },
             {
               id: 'piz-3',
               nome: 'Pizza Parma com Rúcula Selvagem',
               descricao: 'Presunto Parma curado 18 meses, lâminas de Grana Padano, rúcula e azeite trufado.',
               preco: 74.0,
-              disponivel: true
+              disponivel: true,
+              destaque: true,
+              tempoPreparo: '15 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-chef-plating-a-pizza-with-fresh-herbs-41319-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80'
             }
           ]
         },
@@ -132,14 +148,18 @@ export class MultiTenantManager {
               nome: 'Vinho Tinto Chianti Classico (Taça)',
               descricao: 'Vinho italiano encorpado com notas de frutas vermelhas e carvalho.',
               preco: 32.0,
-              disponivel: true
+              disponivel: true,
+              tempoPreparo: '2 min',
+              fotoUrl: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=800&q=80'
             },
             {
               id: 'beb-2',
               nome: 'Soda Italiana de Maçã Verde',
               descricao: 'Refrescante, preparada com xarope artesanal e folhas de hortelã.',
               preco: 14.0,
-              disponivel: true
+              disponivel: true,
+              tempoPreparo: '3 min',
+              fotoUrl: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80'
             }
           ]
         }
@@ -165,14 +185,21 @@ export class MultiTenantManager {
               descricao: '2x 90g ultra-smash Angus, cheddar inglês maturado, bacon artesanal em tiras e maionese defumada.',
               preco: 39.9,
               disponivel: true,
-              destaque: true
+              destaque: true,
+              tempoPreparo: '10 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-frying-burgers-in-a-kitchen-41484-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80'
             },
             {
               id: 'bsp-2',
               nome: 'Truffle Burger 180g',
               descricao: 'Blend 180g grelhado no fogo, queijo brie maçaricado, cogumelos salteados e azeite trufado.',
               preco: 48.0,
-              disponivel: true
+              disponivel: true,
+              destaque: true,
+              tempoPreparo: '12 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-assembling-a-delicious-hamburger-41485-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=800&q=80'
             }
           ]
         },
@@ -185,7 +212,9 @@ export class MultiTenantManager {
               nome: 'Batata Rústica com Páprica e Alecrim',
               descricao: 'Crocantes por fora e macias por dentro, servidas com dip de alho assado.',
               preco: 22.0,
-              disponivel: true
+              disponivel: true,
+              tempoPreparo: '8 min',
+              fotoUrl: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=800&q=80'
             }
           ]
         }
@@ -211,7 +240,10 @@ export class MultiTenantManager {
               descricao: 'Arroz arbóreo mantecado com Grana Padano, cogumelos frescos e ossobuco cozido lentamente.',
               preco: 78.0,
               disponivel: true,
-              destaque: true
+              destaque: true,
+              tempoPreparo: '20 min',
+              videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-chef-plating-a-risotto-dish-43393-large.mp4',
+              fotoUrl: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=800&q=80'
             }
           ]
         }
