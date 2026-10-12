@@ -12,3 +12,9 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 - Decisão Arquitetural `docs/adr/ADR-001-stack-callin-pwa.md` aprovando Vite + React 19 + TypeScript + Tailwind CSS.
 - Documentação viva em `documentation/ARCHITECTURE.md` e `documentation/REQUIREMENTS.md`.
 - Especificação de gravação de hardware físico NFC com NTAG213/215 via app NFC Tools.
+- `ChamadosStore` com lógica de domínio puro, debounce anti-spam de 30s e ordenação FIFO.
+- Suíte TDD em `tests/chamados-store.test.ts` com 8 asserções cobrindo Happy Path, Edge Cases e Error Paths.
+- Componente `TelaMesa.tsx` com visão tátil do cliente (Cardápio, Chamar Garçom com vibração háptica e Pedir Conta com chave Pix).
+- Componente `PainelSalao.tsx` com visão em tempo real para equipe do restaurante e conclusão de chamados.
+- Roteamento e switcher de simulação local em `src/App.tsx`.
+
