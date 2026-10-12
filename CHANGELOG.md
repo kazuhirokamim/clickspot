@@ -17,4 +17,10 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 - Componente `TelaMesa.tsx` com visão tátil do cliente (Cardápio, Chamar Garçom com vibração háptica e Pedir Conta com chave Pix).
 - Componente `PainelSalao.tsx` com visão em tempo real para equipe do restaurante e conclusão de chamados.
 - Roteamento e switcher de simulação local em `src/App.tsx`.
+- Camada Multi-Tenant em `src/core/multi-tenant-store.ts` com isolamento estrito de cardápios e status de assinatura (gating).
+- Biblioteca de ícones SVG limpos e autênticos em `src/components/icons/Icons.tsx` (removendo dependência de emojis).
+- Reformulação visual gastronômica sóbria (paleta carvão/pedra, toques âmbar/mostarda escura e fontes modernas).
+- Alerta sonoro sintetizado em tempo real via Web Audio API no balcão sem arquivos de áudio externos.
+- Suíte TDD multi-tenant com 14 testes passando 100% verdes.
+
 
