@@ -6,8 +6,7 @@ import {
   VolumeIcon,
   VolumeXIcon,
   BellIcon,
-  ClockIcon,
-  SparklesIcon
+  ClockIcon
 } from '../icons/Icons.tsx';
 
 interface ShowcaseVerticalReelProps {
@@ -15,7 +14,7 @@ interface ShowcaseVerticalReelProps {
   indiceInicial: number;
   nomeRestaurante: string;
   onFechar: () => void;
-  onPedirItem: (item: ItemCardapio) => void;
+  onChamarGarcom: () => void;
 }
 
 export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
@@ -23,7 +22,7 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
   indiceInicial,
   nomeRestaurante,
   onFechar,
-  onPedirItem
+  onChamarGarcom
 }) => {
   const [navigator] = useState(() => new ReelNavigator(itens, indiceInicial, { thresholdSwipe: 45 }));
   const [indiceAtivo, setIndiceAtivo] = useState<number>(() => navigator.obterIndiceAtual());
@@ -108,7 +107,7 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
           width: '100%',
           maxWidth: '420px',
           height: '100%',
-          maxHeight: '92vh',
+          maxHeight: '94vh',
           backgroundColor: '#000000',
           borderRadius: '24px',
           overflow: 'hidden',
@@ -183,15 +182,9 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
           {/* Top Bar: Nome do Restaurante + Som + Fechar */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '12px', fontWeight: 700, color: '#f5f5f4', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
+              <span style={{ fontSize: '13px', fontWeight: 700, color: '#f5f5f4', textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
                 {nomeRestaurante}
               </span>
-              {itemAtual.destaque && (
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '3px', padding: '2px 6px', borderRadius: '4px', backgroundColor: 'rgba(217,119,6,0.85)', color: '#ffffff', fontSize: '10px', fontWeight: 800 }}>
-                  <SparklesIcon size={10} />
-                  <span>Mais Pedido</span>
-                </span>
-              )}
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -262,18 +255,13 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
 
         {/* Camada Inferior: Informações do Prato & Chamada para Ação */}
         <div style={{ position: 'relative', zIndex: 10, padding: '20px 18px 24px 18px' }}>
-          {/* Badge de Vídeo / Modo Preparação */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '3px 8px', borderRadius: '6px', backgroundColor: 'rgba(0,0,0,0.65)', border: '1px solid rgba(255,255,255,0.2)', color: '#d97706', fontSize: '11px', fontWeight: 700 }}>
-              <span>{itemAtual.videoUrl ? '▶ Preparação ao Vivo' : '📷 Apresentação do Prato'}</span>
-            </span>
-            {itemAtual.tempoPreparo && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#e7e5e4' }}>
-                <ClockIcon size={12} />
-                <span>Preparo em ~{itemAtual.tempoPreparo}</span>
-              </span>
-            )}
-          </div>
+          {/* Tempo de Preparo (se disponível) */}
+          {itemAtual.tempoPreparo && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '8px', color: '#e7e5e4', fontSize: '12px' }}>
+              <ClockIcon size={13} style={{ color: '#d97706' }} />
+              <span>Preparo em ~{itemAtual.tempoPreparo}</span>
+            </div>
+          )}
 
           {/* Nome e Preço */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', marginBottom: '8px' }}>
@@ -290,15 +278,15 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
             {itemAtual.descricao}
           </p>
 
-          {/* Botão de Conversão Direta: Quero Este Prato */}
+          {/* Botão Unificado: Chamar Garçom */}
           <button
-            onClick={() => onPedirItem(itemAtual)}
+            onClick={onChamarGarcom}
             style={{
               width: '100%',
               padding: '14px',
               borderRadius: '14px',
-              backgroundColor: '#d97706',
-              border: '1px solid #b45309',
+              backgroundColor: '#1c1d22',
+              border: '1px solid #363942',
               color: '#ffffff',
               fontSize: '14px',
               fontWeight: 700,
@@ -307,11 +295,11 @@ export const ShowcaseVerticalReel: React.FC<ShowcaseVerticalReelProps> = ({
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: '0 8px 20px rgba(217, 119, 6, 0.45)'
+              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.4)'
             }}
           >
-            <BellIcon size={18} />
-            <span>Chamar Garçom para Este Prato</span>
+            <BellIcon size={18} style={{ color: '#d97706' }} />
+            <span>Chamar Garçom</span>
           </button>
 
           {/* Dica de Gesto no Mobile */}

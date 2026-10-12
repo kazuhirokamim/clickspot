@@ -8,13 +8,11 @@ import {
   BellIcon,
   BookOpenIcon,
   CreditCardIcon,
-  UtensilsIcon,
   CheckIcon,
   CopyIcon,
   XIcon,
   SearchIcon,
-  ChevronRightIcon,
-  SparklesIcon
+  ChevronRightIcon
 } from '../icons/Icons.tsx';
 
 interface TelaMesaProps {
@@ -38,7 +36,6 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
 
   // Estados dos Modais
   const [modalCardapioAberto, setModalCardapioAberto] = useState<boolean>(false);
-  const [modalChamarAberto, setModalChamarAberto] = useState<boolean>(false);
   const [modalContaAberto, setModalContaAberto] = useState<boolean>(false);
 
   // Estado do Showcase FYP / Reels
@@ -59,7 +56,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
     return () => clearInterval(interval);
   }, [cooldown]);
 
-  const dispararChamado = (tipo: TipoChamado, metodo?: MetodoPagamento, label?: string) => {
+  const dispararChamado = (tipo: TipoChamado, metodo?: MetodoPagamento) => {
     if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       navigator.vibrate(200);
     }
@@ -73,18 +70,17 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
 
     if (resultado.sucesso) {
       setCooldown(30);
-      setModalChamarAberto(false);
       setModalContaAberto(false);
       setReelAberto(false);
 
       if (tipo === 'pedir_conta') {
         setStatusMsg({
-          texto: `Conta solicitada (${metodo?.toUpperCase()}). O atendente está a caminho da Mesa ${mesaId}.`,
+          texto: `Conta solicitada (${metodo?.toUpperCase()}). O atendente está a caminho.`,
           tipo: 'sucesso'
         });
       } else {
         setStatusMsg({
-          texto: `${label || 'Atendente'} notificado! Em instantes você será atendido na Mesa ${mesaId}.`,
+          texto: `Garçom chamado para a Mesa ${mesaId}! Em instantes você será atendido.`,
           tipo: 'sucesso'
         });
       }
@@ -118,7 +114,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
       <div style={{ maxWidth: '440px', margin: '60px auto', padding: '32px 24px', textAlign: 'center', backgroundColor: '#1c1d22', borderRadius: '16px', border: '1px solid #44403c', color: '#f5f5f4' }}>
         <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#f5f5f4', marginBottom: '8px' }}>{restaurante.nome}</h2>
         <p style={{ fontSize: '14px', color: '#a8a29e', lineHeight: 1.6 }}>
-          O cardápio digital desta unidade está temporariamente em atualização. Por favor, solicite o atendimento ao garçom no balcão.
+          O cardápio digital desta unidade está temporariamente em atualização. Por favor, solicite o atendimento ao garçom.
         </p>
       </div>
     );
@@ -126,7 +122,6 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
 
   // Todos os itens do restaurante
   const todosOsItens = restaurante.cardapio.flatMap((c) => c.itens);
-  const itensComVideo = todosOsItens.filter((i) => i.videoUrl || i.destaque);
 
   // Filtragem de itens do cardápio no modal
   const categorias = restaurante.cardapio;
@@ -147,20 +142,22 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
   };
 
   return (
-    <div style={{ maxWidth: '460px', margin: '0 auto', padding: '20px 16px', width: '100%', color: '#f5f5f4' }}>
-      {/* Topo / Header da Mesa */}
-      <header style={{ textAlign: 'center', marginBottom: '20px' }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '999px', backgroundColor: '#262830', border: '1px solid #363942', color: '#d97706', fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
+    <div style={{ maxWidth: '460px', margin: '0 auto', padding: '24px 18px', width: '100%', color: '#f5f5f4' }}>
+      {/* Topo / Header da Mesa (Foco Mobile Direto) */}
+      <header style={{ textAlign: 'center', marginBottom: '28px' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '5px 14px', borderRadius: '999px', backgroundColor: '#1c1d22', border: '1px solid #2d2f36', color: '#d97706', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '10px' }}>
           <span>Mesa {mesaId}</span>
-          <span style={{ color: '#78716c' }}>•</span>
-          <span>{restaurante.segmento}</span>
-        </span>
-        <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#fafaf9', letterSpacing: '-0.02em' }}>{restaurante.nome}</h1>
+          <span style={{ color: '#57534e' }}>•</span>
+          <span style={{ color: '#a8a29e' }}>{restaurante.segmento}</span>
+        </div>
+        <h1 style={{ fontSize: '26px', fontWeight: 800, color: '#fafaf9', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+          {restaurante.nome}
+        </h1>
       </header>
 
-      {/* Alerta de Status */}
+      {/* Alerta de Status / Notificação */}
       {statusMsg && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderRadius: '12px', backgroundColor: statusMsg.tipo === 'sucesso' ? '#1c241c' : '#262016', border: `1px solid ${statusMsg.tipo === 'sucesso' ? '#2e4c2e' : '#5c4314'}`, color: statusMsg.tipo === 'sucesso' ? '#86efac' : '#fcd34d', fontSize: '13px', fontWeight: 500, marginBottom: '18px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderRadius: '14px', backgroundColor: statusMsg.tipo === 'sucesso' ? '#1c241c' : '#262016', border: `1px solid ${statusMsg.tipo === 'sucesso' ? '#2e4c2e' : '#5c4314'}`, color: statusMsg.tipo === 'sucesso' ? '#86efac' : '#fcd34d', fontSize: '13px', fontWeight: 500, marginBottom: '20px' }}>
           <span>{statusMsg.texto}</span>
           <button onClick={() => setStatusMsg(null)} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', display: 'flex', padding: 0 }}>
             <XIcon size={16} />
@@ -168,115 +165,98 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
         </div>
       )}
 
-      {/* Carrossel de Destaques em Vídeo 9:16 (Stories dos Mais Vendidos) */}
-      {itensComVideo.length > 0 && (
-        <div style={{ marginBottom: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '12px', fontWeight: 700, color: '#d97706', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              <SparklesIcon size={13} />
-              <span>Vídeos dos Mais Pedidos</span>
-            </span>
-            <span style={{ fontSize: '11px', color: '#78716c' }}>Veja o preparo</span>
-          </div>
-
-          <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '4px' }}>
-            {itensComVideo.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => abrirReelDoItem(item)}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer',
-                  padding: '2px',
-                  outline: 'none',
-                  flexShrink: 0
-                }}
-              >
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', padding: '2px', backgroundColor: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img
-                    src={item.fotoUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=200&q=80'}
-                    alt={item.nome}
-                    style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover', border: '2px solid #121316' }}
-                  />
-                </div>
-                <span style={{ fontSize: '11px', fontWeight: 600, color: '#f5f5f4', maxWidth: '72px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {item.nome.split(' ')[0]}
-                </span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Grid Bento de Ações (Design Moderno & Gastronômico) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {/* Cardápio */}
+      {/* Grid de Ações da Mesa: Cores Coesas e Neutras com Acento Gastronômico */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        {/* 1. Cardápio Digital */}
         <button
           onClick={() => setModalCardapioAberto(true)}
-          style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', backgroundColor: '#1c1d22', border: '1px solid #2d2f36', borderRadius: '16px', cursor: 'pointer', textAlign: 'left' }}
-        >
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#262830', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706' }}>
-            <BookOpenIcon size={22} />
-          </div>
-          <div style={{ flex: 1 }}>
-            <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#fafaf9' }}>Cardápio Digital</h3>
-            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '2px' }}>Toque em qualquer prato para ver o vídeo</p>
-          </div>
-          <ChevronRightIcon size={18} style={{ color: '#78716c' }} />
-        </button>
-
-        {/* Chamar Garçom */}
-        <button
-          disabled={cooldown > 0}
-          onClick={() => setModalChamarAberto(true)}
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: '16px',
-            padding: '18px 20px',
-            backgroundColor: cooldown > 0 ? '#1f2026' : '#d97706',
-            border: cooldown > 0 ? '1px solid #2d2f36' : '1px solid #b45309',
+            padding: '20px 18px',
+            backgroundColor: '#1c1d22',
+            border: '1px solid #2d2f36',
             borderRadius: '16px',
-            cursor: cooldown > 0 ? 'not-allowed' : 'pointer',
-            textAlign: 'left'
+            cursor: 'pointer',
+            textAlign: 'left',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)'
           }}
         >
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: cooldown > 0 ? '#282a32' : '#b45309', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff' }}>
+          <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#262830', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
+            <BookOpenIcon size={22} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#fafaf9' }}>Cardápio Digital</h3>
+            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '3px' }}>Pratos, porções, bebidas e preços</p>
+          </div>
+          <ChevronRightIcon size={18} style={{ color: '#78716c' }} />
+        </button>
+
+        {/* 2. Chamar Garçom (1 Toque Direto, sem sub-opções e com a mesma cor elegante) */}
+        <button
+          disabled={cooldown > 0}
+          onClick={() => dispararChamado('garcom_mesa')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            padding: '20px 18px',
+            backgroundColor: '#1c1d22',
+            border: cooldown > 0 ? '1px solid #44403c' : '1px solid #2d2f36',
+            borderRadius: '16px',
+            cursor: cooldown > 0 ? 'not-allowed' : 'pointer',
+            textAlign: 'left',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)',
+            opacity: cooldown > 0 ? 0.75 : 1
+          }}
+        >
+          <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#262830', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
             <BellIcon size={22} />
           </div>
           <div style={{ flex: 1 }}>
-            <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#ffffff' }}>
-              {cooldown > 0 ? `Chamado Ativo (${cooldown}s)` : 'Chamar Atendente'}
+            <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#fafaf9' }}>
+              {cooldown > 0 ? `Chamado Enviado (${cooldown}s)` : 'Chamar Garçom'}
             </h3>
-            <p style={{ fontSize: '13px', color: cooldown > 0 ? '#a8a29e' : '#fef3c7', marginTop: '2px' }}>
-              {cooldown > 0 ? 'Atendente já foi notificado' : 'Garçom na mesa, gelo ou suporte'}
+            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '3px' }}>
+              {cooldown > 0 ? 'Atendente já foi notificado da sua mesa' : 'Solicitar a presença do garçom na mesa'}
             </p>
           </div>
-          {cooldown === 0 && <ChevronRightIcon size={18} style={{ color: '#ffffff' }} />}
+          {cooldown === 0 ? (
+            <ChevronRightIcon size={18} style={{ color: '#78716c' }} />
+          ) : (
+            <span style={{ fontSize: '12px', fontWeight: 700, color: '#d97706' }}>Aguarde</span>
+          )}
         </button>
 
-        {/* Pedir a Conta */}
+        {/* 3. Pedir a Conta */}
         <button
           onClick={() => setModalContaAberto(true)}
-          style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '18px 20px', backgroundColor: '#1c1d22', border: '1px solid #2d2f36', borderRadius: '16px', cursor: 'pointer', textAlign: 'left' }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            padding: '20px 18px',
+            backgroundColor: '#1c1d22',
+            border: '1px solid #2d2f36',
+            borderRadius: '16px',
+            cursor: 'pointer',
+            textAlign: 'left',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.25)'
+          }}
         >
-          <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#262830', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#a8a29e' }}>
+          <div style={{ width: '46px', height: '46px', borderRadius: '12px', backgroundColor: '#262830', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
             <CreditCardIcon size={22} />
           </div>
           <div style={{ flex: 1 }}>
             <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#fafaf9' }}>Pedir a Conta</h3>
-            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '2px' }}>Cartão, dinheiro ou Pix instantâneo</p>
+            <p style={{ fontSize: '13px', color: '#a8a29e', marginTop: '3px' }}>Pagar no cartão, dinheiro ou Pix</p>
           </div>
           <ChevronRightIcon size={18} style={{ color: '#78716c' }} />
         </button>
       </div>
 
-      {/* MODAL 1: CARDÁPIO COMPLETO COM TOQUE PARA REELS */}
+      {/* MODAL 1: CARDÁPIO (Clean, sem tags que denunciam vídeo) */}
       {modalCardapioAberto && (
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', zIndex: 100 }}>
           <div style={{ backgroundColor: '#18191e', border: '1px solid #2d2f36', borderRadius: '20px', maxWidth: '440px', width: '100%', maxHeight: '85vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -329,7 +309,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
               </div>
             </div>
 
-            {/* Lista de Itens do Cardápio com Clique para Abrir o Reel */}
+            {/* Lista de Itens do Cardápio (Sem box de vídeo) */}
             <div style={{ flex: 1, overflowY: 'auto', padding: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {itensExibidos.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '40px 10px', color: '#78716c', fontSize: '14px' }}>
@@ -341,30 +321,26 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
                     key={item.id}
                     onClick={() => abrirReelDoItem(item)}
                     style={{
-                      padding: '14px',
+                      padding: '14px 16px',
                       backgroundColor: '#212328',
                       border: '1px solid #2d2f36',
                       borderRadius: '14px',
                       display: 'flex',
                       justifyContent: 'space-between',
+                      alignItems: 'center',
                       gap: '12px',
                       cursor: 'pointer',
                       transition: 'border-color 0.15s'
                     }}
                   >
                     <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
-                        <strong style={{ fontSize: '15px', color: '#fafaf9' }}>{item.nome}</strong>
-                        {item.videoUrl && (
-                          <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 6px', borderRadius: '4px', backgroundColor: '#382811', color: '#fbbf24', border: '1px solid #78350f', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                            <span>▶ Vídeo</span>
-                          </span>
-                        )}
-                      </div>
+                      <strong style={{ fontSize: '15px', color: '#fafaf9', display: 'block', marginBottom: '3px' }}>
+                        {item.nome}
+                      </strong>
                       <p style={{ fontSize: '12px', color: '#a8a29e', lineHeight: 1.4 }}>{item.descricao}</p>
                     </div>
 
-                    <div style={{ textAlign: 'right', alignSelf: 'center', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ textAlign: 'right', display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
                       <span style={{ fontSize: '15px', fontWeight: 700, color: '#f5f5f4' }}>
                         {item.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                       </span>
@@ -385,40 +361,8 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
           indiceInicial={indiceReel}
           nomeRestaurante={restaurante.nome}
           onFechar={() => setReelAberto(false)}
-          onPedirItem={(prato) => dispararChamado('garcom_mesa', undefined, `Pedido: ${prato.nome}`)}
+          onChamarGarcom={() => dispararChamado('garcom_mesa')}
         />
-      )}
-
-      {/* MODAL 2: CHAMAR ATENDENTE COM MOTIVOS ESPECÍFICOS */}
-      {modalChamarAberto && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', zIndex: 100 }}>
-          <div style={{ backgroundColor: '#18191e', border: '1px solid #2d2f36', borderRadius: '20px', maxWidth: '420px', width: '100%', padding: '20px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#fafaf9' }}>Chamar Atendente</h2>
-              <button onClick={() => setModalChamarAberto(false)} style={{ background: 'none', border: 'none', color: '#a8a29e', cursor: 'pointer', padding: 0 }}>
-                <XIcon size={20} />
-              </button>
-            </div>
-            <p style={{ fontSize: '13px', color: '#a8a29e', marginBottom: '16px' }}>Qual é o motivo do chamado na Mesa {mesaId}?</p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <button
-                onClick={() => dispararChamado('garcom_mesa', undefined, 'Garçom')}
-                style={{ padding: '14px 16px', borderRadius: '12px', backgroundColor: '#212328', border: '1px solid #2f323a', color: '#fafaf9', textAlign: 'left', fontWeight: 600, fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
-              >
-                <BellIcon size={18} style={{ color: '#d97706' }} />
-                <span>Atendimento Geral / Garçom na Mesa</span>
-              </button>
-              <button
-                onClick={() => dispararChamado('gelo_talher_guardanapo', undefined, 'Gelo / Talheres')}
-                style={{ padding: '14px 16px', borderRadius: '12px', backgroundColor: '#212328', border: '1px solid #2f323a', color: '#fafaf9', textAlign: 'left', fontWeight: 600, fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}
-              >
-                <UtensilsIcon size={18} style={{ color: '#d97706' }} />
-                <span>Trazer Gelo, Talheres ou Guardanapo</span>
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       {/* MODAL 3: PEDIR A CONTA */}
@@ -478,7 +422,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
       )}
 
       {/* Footer sóbrio */}
-      <footer style={{ marginTop: '36px', textAlign: 'center', fontSize: '11px', color: '#57534e' }}>
+      <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '11px', color: '#57534e' }}>
         Call-in Atendimento Inteligente • Padrão Tear
       </footer>
     </div>

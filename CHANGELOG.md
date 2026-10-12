@@ -27,6 +27,10 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 - Suporte a vídeos verticais de preparação gastronômica para os pratos mais pedidos da casa e fotos em alta resolução com badge de tempo de preparo.
 - Botão de conversão direta dentro do Reel ("Chamar Garçom para Este Prato").
 - Suíte TDD completa em `tests/reel-navigator.test.ts` elevando o total para 24 testes unitários 100% verdes.
+- Refinamento da experiência Mobile-First: remoção de modais intermediários no botão de garçom para acionamento direto em 1 toque.
+- Unificação estética dos 3 botões da mesa em paleta sóbria de alta gastronomia, eliminando disparidade de cores.
+- Higienização da lista do cardápio: remoção de sinalizações de vídeo para fluidez natural e botão "Chamar Garçom" genérico dentro do reel.
+
 
 
 
