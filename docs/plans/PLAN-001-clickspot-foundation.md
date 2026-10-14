@@ -1,4 +1,4 @@
-# PLAN-001: Fundação do Call-in — PWA Cliente, Painel de Salão e Hardware NFC
+# PLAN-001: Fundação do ClickSpot — PWA Cliente, Painel de Salão e Hardware NFC
 
 ## Metadados SDD
 - **versao_plano:** 1.0.0
@@ -9,13 +9,13 @@
 ---
 
 ## 1. Visão Geral e Justificativa
-O **Call-in** é uma solução de mesa inteligente orientada a restaurantes de atendimento rápido, bares e cafeterias. O projeto conecta um componente de hardware físico (plaquinhas com chip NFC NTAG213/215 e QR Code gravadas via NFC Tools) a uma aplicação PWA ultraleve sem necessidade de download ou login pelo cliente da mesa.
+O **ClickSpot** é uma solução de mesa inteligente orientada a restaurantes de atendimento rápido, bares e cafeterias. O projeto conecta um componente de hardware físico (plaquinhas com chip NFC NTAG213/215 e QR Code gravadas via NFC Tools) a uma aplicação PWA ultraleve sem necessidade de download ou login pelo cliente da mesa.
 
-Este plano estabelece a fundação de código do projeto no repositório `callin`, cobrindo:
-1. Aplicação PWA do cliente de mesa (`/m/:restaurante/:mesa`) com os 3 botões canônicos: Cardápio, Chamar Atendente e Pedir Conta.
+Este plano estabelece a fundação de código do projeto no repositório `clickspot`, cobrindo:
+1. Aplicação PWA do cliente de mesa (`/m/:restaurante/:mesa`) com os 3 botões canônicos: Cardápio, Chamar Garçom e Pedir Conta.
 2. Painel em tempo real do salão/balcão para visualização dos chamados com alerta sonoro e conclusão de atendimento.
 3. Especificação do fluxo de gravação NFC física com o app NFC Tools.
-4. Integração da governança com a tríade de projetos ativos de Kazu: **Pulsense**, **Doc2Fill** e **Call-in**.
+4. Integração da governança com a tríade de projetos ativos de Kazu: **Pulsense**, **Doc2Fill** e **ClickSpot**.
 
 ---
 

@@ -1,5 +1,5 @@
 /**
- * Tipagens Canônicas do Domínio Call-in
+ * Tipagens Canônicas do Domínio ClickSpot
  * Padrão Tear & Noesis Domain Core
  */
 

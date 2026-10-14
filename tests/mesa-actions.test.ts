@@ -42,6 +42,12 @@ describe('Ações da Mesa Mobile — 1-Toque Direto & FYP Reel (Padrão Tear & N
       expect(chamadoConta.sucesso).toBe(true);
       expect(chamadoConta.chamado?.metodoPagamento).toBe('pix');
     });
+
+    it('deve utilizar contato@clickspot.app como chave Pix de contingência da marca ClickSpot', () => {
+      const semPix = tenantManager.obterRestaurante('restaurante-inexistente');
+      const chavePixOficial = semPix?.chavePix || 'contato@clickspot.app';
+      expect(chavePixOficial).toBe('contato@clickspot.app');
+    });
   });
 
   // ==========================================

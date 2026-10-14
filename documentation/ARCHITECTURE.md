@@ -1,7 +1,7 @@
-# 🏛️ Arquitetura do Sistema — Call-in
+# 🏛️ Arquitetura do Sistema — ClickSpot
 
 ## 1. Visão Geral
-O **Call-in** é estruturado sobre o princípio de **Fricção Zero para o Cliente** e **Operação Conectada para o Restaurante**:
+O **ClickSpot** é estruturado sobre o princípio de **Fricção Zero para o Cliente** e **Operação Conectada para o Restaurante**:
 
 ```mermaid
 flowchart LR
@@ -12,9 +12,9 @@ flowchart LR
 
     subgraph Cliente [PWA do Cliente]
         TelaMesa[Rota: /m/:restaurante/:mesa]
-        Acao1[1. Cardápio Digital]
-        Acao2[2. Chamar Garçom]
-        Acao3[3. Pedir Conta]
+        Acao1[1. Cardápio Digital com Reels 9:16]
+        Acao2[2. Chamar Garçom Direto 1-Toque]
+        Acao3[3. Pedir Conta com Pix Instantâneo]
     end
 
     subgraph Backend [Camada Realtime]
@@ -42,12 +42,12 @@ flowchart LR
 ## 2. Componentes Principais
 
 ### 2.1. PWA do Cliente (`/m/:restauranteId/:mesaId`)
-- **Abertura:** Invocada diretamente pelo link NDEF gravado na tag NFC (ex: `https://callin.app/m/pizzaria-roma/04`).
+- **Abertura:** Invocada diretamente pelo link NDEF gravado na tag NFC (ex: `https://clickspot.app/m/pizzaria-roma/04`).
 - **Estado Local:** Mantém debounce de 30s para evitar cliques múltiplos acidentais no botão de chamado.
 - **Feedback:** Dispara `navigator.vibrate(200)` para confirmação sensorial tátil imediata no smartphone do cliente.
 
 ### 2.2. Hub de Chamados em Tempo Real
-- Registra cada chamado com: `id`, `restauranteId`, `mesaId`, `tipo` (`garcom_mesa` | `gelo_talher_guardanapo` | `pedir_conta`), `metodoPagamento` (se aplicável), `timestamp` e `status` (`pendente` | `atendido`).
+- Registra cada chamado com: `id`, `restauranteId`, `mesaId`, `tipo` (`garcom_mesa` | `pedir_conta`), `metodoPagamento` (se aplicável), `timestamp` e `status` (`pendente` | `atendido`).
 
 ### 2.3. Painel do Salão / Balcão (`/painel/:restauranteId`)
 - Exibe o grid de mesas ativas.
@@ -60,6 +60,6 @@ flowchart LR
 1. **Ferramenta:** Aplicativo gratuito **NFC Tools** no iPhone / Android.
 2. **Procedimento:**
    - Abrir a aba `Escrever` > `Adicionar um registro` > `URL / URI`.
-   - Inserir a URL canônica da mesa (ex: `https://callin.app/m/[restaurante]/[mesa]`).
+   - Inserir a URL canônica da mesa (ex: `https://clickspot.app/m/[restaurante]/[mesa]`).
    - Aproximar a parte superior do iPhone da placa/chip NFC para gravação.
    - Opcional: Proteger a tag contra regravação com senha.

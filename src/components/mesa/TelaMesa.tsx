@@ -93,7 +93,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
   };
 
   const copiarPix = () => {
-    const chave = restaurante?.chavePix || 'contato@callin.app';
+    const chave = restaurante?.chavePix || 'contato@clickspot.app';
     if (navigator?.clipboard) {
       navigator.clipboard.writeText(chave);
       setPixCopiado(true);
@@ -423,7 +423,7 @@ export const TelaMesa: React.FC<TelaMesaProps> = ({
 
       {/* Footer sóbrio */}
       <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '11px', color: '#57534e' }}>
-        Call-in Atendimento Inteligente • Padrão Tear
+        ClickSpot Atendimento Inteligente • Padrão Tear
       </footer>
     </div>
   );

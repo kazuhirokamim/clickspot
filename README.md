@@ -1,4 +1,4 @@
-# 🛎️ Call-in — Atendimento Inteligente de Mesas com NFC & PWA
+# 🛎️ ClickSpot — Atendimento Inteligente de Mesas com NFC & PWA
 
 > **Encostou. Chamou. Pediu.**  
 > Solução integrada de hardware físico (NFC/QR Code) e software ultraleve para atendimento ágil em restaurantes, bares e cafeterias.
@@ -6,11 +6,11 @@
 ---
 
 ## 🧭 Visão do Produto
-O **Call-in** elimina a fricção do atendimento em estabelecimentos de rotação contínua. 
+O **ClickSpot** elimina a fricção do atendimento em estabelecimentos de rotação contínua. 
 O cliente senta na mesa, encosta o smartphone na plaquinha com chip NFC (ou escaneia o QR Code) e tem acesso imediato a 3 ações essenciais sem precisar baixar aplicativo ou criar conta:
-1. 📖 **Cardápio Digital:** Visualização limpa e categorizada de pratos e bebidas.
-2. 🛎️ **Chamar Atendente:** Disparo instantâneo com vibração háptica no celular e alerta sonoro no balcão.
-3. 💳 **Pedir a Conta:** Escolha rápida da forma de pagamento (Cartão Débito, Crédito, Dinheiro ou chave Pix imediata).
+1. 📖 **Cardápio Digital:** Visualização limpa e categorizada de pratos e bebidas com Showcase FYP 9:16 de vídeos curtos de preparação.
+2. 🛎️ **Chamar Garçom:** Disparo instantâneo em 1 toque com vibração háptica no celular e alerta sonoro no balcão.
+3. 💳 **Pedir a Conta:** Escolha rápida da forma de pagamento (Cartão Débito, Crédito, Dinheiro ou chave Pix imediata da loja).
 
 ---
 
@@ -19,21 +19,21 @@ Este projeto segue rigorosamente o cânone de engenharia de software **Tear**:
 - **Test-First / TDD:** 100% das funções centrais acompanhadas por testes nos 3 cenários (Caminho Feliz, Borda e Erro).
 - **Docs-First & ADRs:** Todas as decisões registradas em `docs/adr/` e planos em `docs/plans/`.
 - **4 Lanes Golden & Green:** Auditoria de Código, Segurança (Zero Retenção), LGPD e Performance (< 500ms em 4G).
-- **Limite por Arquivo:** Menos de 700 linhas de código por arquivo.
+- **Limite por Arquivo:** Menos de 700 linhas de código por arquivo (Regra Tear #24).
 
 ---
 
 ## 🛠️ Stack Tecnológica
 - **Frontend / PWA:** Vite + React 19 + TypeScript + Tailwind CSS
-- **Testes:** Vitest + Testing Library
+- **Testes:** Vitest + Testing Library (29 testes unitários 100% verdes)
 - **Hardware:** Placas físicas de mesa com chip NFC NTAG213/215 (13.56 MHz, compatível universalmente com iOS e Android) programadas via app **NFC Tools**.
-- **Realtime:** WebSockets / Eventos reativos leves.
+- **Realtime:** WebSockets / Eventos reativos leves em memória RAM efêmera.
 
 ---
 
 ## 📂 Estrutura do Repositório
 ```
-callin/
+clickspot/
 ├── .gitignore
 ├── GEMINI.md                  # Ponteiro do Cânone Tear
 ├── README.md                  # Este documento

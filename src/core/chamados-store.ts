@@ -1,5 +1,5 @@
 /**
- * ChamadosStore — Motor de Domínio Puro do Call-in
+ * ChamadosStore — Motor de Domínio Puro do ClickSpot
  * Padrão Tear & Noesis Domain Core
  * Orçamento estrito: < 700 linhas (Regra Tear #24)
  */

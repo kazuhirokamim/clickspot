@@ -1,6 +1,16 @@
-# 📋 Changelog — Call-in
+# 📋 Changelog — ClickSpot
 
 Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, seguindo o padrão [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/) e [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+---
+
+## [0.2.0] - 2026-10-14
+### Modificado
+- Rebranding oficial do projeto e da marca para **ClickSpot** (*Encostou. Chamou. Pediu.*).
+- Atualização do identificador do pacote `package.json` para `clickspot`.
+- Atualização de títulos, metadados e rotas canônicas para o domínio `clickspot.app`.
+- Renomeação e unificação do ecossistema de documentação viva, ADRs e planos de engenharia.
+- Atualização do symlink de trabalho no sistema operacional para `~/Projetos/clickspot`.
 
 ---
 
@@ -8,8 +18,8 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 ### Adicionado
 - Fundação do repositório no padrão de excelência Tear e Noesis.
 - Registro de Requisitos formal `respostas/001.md` (TearForm).
-- Blueprint de Engenharia SDD 2.0 `docs/plans/PLAN-001-callin-foundation.md`.
-- Decisão Arquitetural `docs/adr/ADR-001-stack-callin-pwa.md` aprovando Vite + React 19 + TypeScript + Tailwind CSS.
+- Blueprint de Engenharia SDD 2.0 `docs/plans/PLAN-001-clickspot-foundation.md`.
+- Decisão Arquitetural `docs/adr/ADR-001-stack-clickspot-pwa.md` aprovando Vite + React 19 + TypeScript + Tailwind CSS.
 - Documentação viva em `documentation/ARCHITECTURE.md` e `documentation/REQUIREMENTS.md`.
 - Especificação de gravação de hardware físico NFC com NTAG213/215 via app NFC Tools.
 - `ChamadosStore` com lógica de domínio puro, debounce anti-spam de 30s e ordenação FIFO.
@@ -25,12 +35,8 @@ Todas as mudanças notáveis deste projeto serão documentadas neste arquivo, se
 - Showcase Vertical FYP em `src/components/mesa/ShowcaseVerticalReel.tsx` com proporção 9:16 estilo TikTok/Reels.
 - Navegação vertical por gestos de toque (touch swipe) no mobile via `ReelNavigator` com clamp de limites e sensibilidade calibrada.
 - Suporte a vídeos verticais de preparação gastronômica para os pratos mais pedidos da casa e fotos em alta resolução com badge de tempo de preparo.
-- Botão de conversão direta dentro do Reel ("Chamar Garçom para Este Prato").
-- Suíte TDD completa em `tests/reel-navigator.test.ts` elevando o total para 24 testes unitários 100% verdes.
+- Botão de conversão direta dentro do Reel ("Chamar Garçom").
+- Suíte TDD completa em `tests/reel-navigator.test.ts` e `tests/mesa-actions.test.ts` totalizando 29 testes unitários 100% verdes.
 - Refinamento da experiência Mobile-First: remoção de modais intermediários no botão de garçom para acionamento direto em 1 toque.
 - Unificação estética dos 3 botões da mesa em paleta sóbria de alta gastronomia, eliminando disparidade de cores.
 - Higienização da lista do cardápio: remoção de sinalizações de vídeo para fluidez natural e botão "Chamar Garçom" genérico dentro do reel.
-
-
-
-

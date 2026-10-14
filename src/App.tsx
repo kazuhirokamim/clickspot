@@ -25,7 +25,7 @@ export const App: React.FC = () => {
             <UtensilsIcon size={18} />
           </div>
           <div>
-            <span style={{ fontWeight: 800, fontSize: '15px', color: '#fafaf9', letterSpacing: '-0.02em', display: 'block', lineHeight: 1 }}>Call-in</span>
+            <span style={{ fontWeight: 800, fontSize: '15px', color: '#fafaf9', letterSpacing: '-0.02em', display: 'block', lineHeight: 1 }}>ClickSpot</span>
             <span style={{ fontSize: '11px', color: '#78716c' }}>Atendimento Inteligente</span>
           </div>
         </div>

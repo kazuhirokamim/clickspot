@@ -1,6 +1,6 @@
 ---
 numero: 1
-titulo: Seleção da Arquitetura e Stack do Call-in PWA Web
+titulo: Seleção da Arquitetura e Stack do ClickSpot PWA Web
 data: 2026-10-11
 status: Aceito
 autores:
@@ -12,7 +12,7 @@ aplica_a:
   - tests
   - docs
 tags:
-  - call-in
+  - clickspot
   - pwa
   - react
   - vite
@@ -21,7 +21,7 @@ tags:
   - zero-friction
 ---
 
-# ADR-001: Seleção da Arquitetura e Stack do Call-in PWA Web
+# ADR-001: Seleção da Arquitetura e Stack do ClickSpot PWA Web
 
 ## Declaração de Decisão (Y-Statement)
 No contexto de atendimento digital de mesas via aproximação NFC e QR Code sem fricção para restaurantes, enfrentando a necessidade de abertura instantânea em redes móveis 4G (< 500ms) sem exigir instalação de aplicativo pelo cliente, decidimos por utilizar Vite com React 19, TypeScript e Tailwind CSS para a aplicação cliente PWA e painel de salão, para alcançar tempo de resposta sub-segundo, facilidade de manutenção e zero atrito de adoção, aceitando gerenciar o roteamento dinâmico de mesas no cliente via rotas leves.
@@ -29,7 +29,7 @@ No contexto de atendimento digital de mesas via aproximação NFC e QR Code sem 
 ---
 
 ## Contexto
-O **Call-in** é uma solução de mesa inteligente acionada por NFC e QR Code. Para o cliente da mesa, **cada segundo de carregamento importa**:
+O **ClickSpot** é uma solução de mesa inteligente acionada por NFC e QR Code. Para o cliente da mesa, **cada segundo de carregamento importa**:
 - Não pode haver tela de carregamento pesada (> 1s resulta em abandono do cliente).
 - Deve funcionar em qualquer smartphone (iOS Safari, Android Chrome) sem instalação prévia.
 - Deve atualizar o status em tempo real (chamados atendidos/pendentes) com WebSocket ou SSE.
