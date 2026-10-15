@@ -1,64 +1,79 @@
-# 🛎️ ClickSpot — Atendimento Inteligente de Mesas com NFC & PWA
+# 🛎️ ClickSpot — Atendimento Inteligente de Mesas com NFC & PWA Ultraleve
+
+[![React](https://img.shields.io/badge/React-19.0-blue.svg?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6.svg?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Vitest](https://img.shields.io/badge/Vitest-2.1-FCC72B.svg?logo=vitest&logoColor=black)](https://vitest.dev)
+[![Hardware](https://img.shields.io/badge/NFC-NTAG213_%2F_215-orange.svg)]()
+[![Privacy](https://img.shields.io/badge/LGPD-Privacy_by_Design-green.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Status: Showcase](https://img.shields.io/badge/Status-Audited_&_Certified-orange.svg)]()
 
 > **Encostou. Chamou. Pediu.**  
-> Solução integrada de hardware físico (NFC/QR Code) e software ultraleve para atendimento ágil em restaurantes, bares e cafeterias.
+> Solução integrada de hardware físico (NFC NTAG213/215 + QR Code) e software ultraleve (< 45 KB) para atendimento instantâneo em restaurantes, bares e cafeterias, sem downloads de lojas ou cadastros.
 
 ---
 
-## 🧭 Visão do Produto
-O **ClickSpot** elimina a fricção do atendimento em estabelecimentos de rotação contínua. 
-O cliente senta na mesa, encosta o smartphone na plaquinha com chip NFC (ou escaneia o QR Code) e tem acesso imediato a 3 ações essenciais sem precisar baixar aplicativo ou criar conta:
-1. 📖 **Cardápio Digital:** Visualização limpa e categorizada de pratos e bebidas com Showcase FYP 9:16 de vídeos curtos de preparação.
-2. 🛎️ **Chamar Garçom:** Disparo instantâneo em 1 toque com vibração háptica no celular e alerta sonoro no balcão.
-3. 💳 **Pedir a Conta:** Escolha rápida da forma de pagamento (Cartão Débito, Crédito, Dinheiro ou chave Pix imediata da loja).
+## ⚡ Quickstart
 
----
-
-## 🏛️ Governança e Qualidade (Padrão Tear & Noesis)
-Este projeto segue rigorosamente o cânone de engenharia de software **Tear**:
-- **Test-First / TDD:** 100% das funções centrais acompanhadas por testes nos 3 cenários (Caminho Feliz, Borda e Erro).
-- **Docs-First & ADRs:** Todas as decisões registradas em `docs/adr/` e planos em `docs/plans/`.
-- **4 Lanes Golden & Green:** Auditoria de Código, Segurança (Zero Retenção), LGPD e Performance (< 500ms em 4G).
-- **Limite por Arquivo:** Menos de 700 linhas de código por arquivo (Regra Tear #24).
-
----
-
-## 🛠️ Stack Tecnológica
-- **Frontend / PWA:** Vite + React 19 + TypeScript + Tailwind CSS
-- **Testes:** Vitest + Testing Library (29 testes unitários 100% verdes)
-- **Hardware:** Placas físicas de mesa com chip NFC NTAG213/215 (13.56 MHz, compatível universalmente com iOS e Android) programadas via app **NFC Tools**.
-- **Realtime:** WebSockets / Eventos reativos leves em memória RAM efêmera.
-
----
-
-## 📂 Estrutura do Repositório
-```
-clickspot/
-├── .gitignore
-├── GEMINI.md                  # Ponteiro do Cânone Tear
-├── README.md                  # Este documento
-├── CHANGELOG.md               # Registro cronológico de versões
-├── docs/
-│   ├── adr/                   # Decisões arquiteturais (ADR-001)
-│   └── plans/                 # Blueprints de engenharia (PLAN-001)
-├── documentation/             # Documentação viva do sistema
-│   ├── ARCHITECTURE.md        # Arquitetura e fluxo de dados
-│   └── REQUIREMENTS.md        # Especificação EARS
-├── respostas/                 # TearForms de requisitos
-├── src/                       # Código-fonte da aplicação
-└── tests/                     # Bateria de testes TDD
-```
-
----
-
-## 🚀 Como Executar Localmente
 ```bash
-# Instalar dependências
+# 1. Clonar o repositório
+git clone https://github.com/kazuhirokamim/clickspot.git
+cd clickspot
+
+# 2. Instalar dependências
 npm install
 
-# Rodar testes TDD
+# 3. Rodar suíte de testes (30 testes TDD verdes)
 npm test
 
-# Executar ambiente de desenvolvimento
+# 4. Iniciar servidor de desenvolvimento
 npm run dev
 ```
+
+Acesse em seu navegador móvel em `http://localhost:5173`.
+
+---
+
+## 🏛️ Fluxo Operacional Ciberfísico
+
+```mermaid
+graph LR
+    Mesa["Placa Física de Mesa<br/>(Chip NFC NTAG213)"] -->|Tap do Celular| PWA["ClickSpot PWA<br/>(React 19 / < 45 KB)"]
+    PWA --> Acoes["Ações em 1 Toque"]
+    Acoes --> C1["Chamar Garçom<br/>(Vibração Háptica 40ms)"]
+    Acoes --> C2["Cardápio Reels<br/>(Showcase FYP 9:16)"]
+    Acoes --> C3["Pedir a Conta<br/>(Cartão / Dinheiro / Pix)"]
+    Acoes --> Painel["Painel de Salão<br/>(Notificação Instantânea)"]
+```
+
+---
+
+## 🚀 Diferenciais de Engenharia
+
+- **Zero Instalação & Zero Cadastro:** O cliente não baixa aplicativos da App Store/Google Play nem cria senhas. A URL é disparada instantaneamente via chip NFC.
+- **Showcase FYP 9:16:** Feed vertical de vídeos curtos dos pratos para elevar o ticket médio e o apetite do consumidor.
+- **Feedback Háptico Imediato:** Confirmação de chamada de mesa via `navigator.vibrate` com fallback inteligente para dispositivos sem suporte.
+- **Privacy by Design:** Nenhum dado pessoal do cliente é coletado ou armazenado (100% LGPD compliant).
+- **Test-First Rigor:** 30 testes unitários automatizados com Vitest cobrindo fluxos de chamada, navegação de mídia e multi-inquilino.
+
+---
+
+## 📁 Estrutura de Diretórios
+
+```
+clickspot/
+├── docs/                           # Planos SDD 2.0 e Decisões de Arquitetura (MADR)
+├── documentation/                  # Acervo Técnico e Laudos Forenses
+│   ├── academico/                  # Artigo IEEE/SBC e Dossiê 90/10
+│   ├── auditorias/                 # Laudo Pericial Forense
+│   └── showcase/                   # Vitrine GitHub e Post LinkedIn
+├── src/                            # Código da aplicação React 19 PWA
+└── tests/                          # 30 testes unitários com Vitest
+```
+
+---
+
+## 📜 Licença
+
+Distribuído sob a licença **MIT**.
